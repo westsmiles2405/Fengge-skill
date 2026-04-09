@@ -10,8 +10,18 @@ import {
   getMonologue, getFieldNote, getNickname,
 } from './persona';
 import { generateResponse, analyzeCodeProblems, CODE_ANALYSIS_KEYWORDS } from './dynamicReply';
+import { updateStyleConfig, PersonaMode } from './styleConfig';
 
 export function activate(context: vscode.ExtensionContext): void {
+    const syncStyleConfig = (): void => {
+      const cfg = vscode.workspace.getConfiguration('fengge');
+      updateStyleConfig({
+        mode: cfg.get<PersonaMode>('personaMode', 'standard'),
+        safeMode: cfg.get<boolean>('safeMode', true),
+      });
+    };
+    syncStyleConfig();
+
   const panel = new FenggeChatPanel(context.extensionUri);
   const pomodoro = new PomodoroTimer();
   const stats = new StatsTracker(context.globalState);
@@ -115,6 +125,12 @@ export function activate(context: vscode.ExtensionContext): void {
   );
 
   context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration((e) => {
+      if (e.affectsConfiguration('fengge.personaMode') || e.affectsConfiguration('fengge.safeMode')) {
+        syncStyleConfig();
+      }
+    }),
+
     vscode.workspace.onDidSaveTextDocument(() => {
       stats.recordSave();
       panel.updateStats(stats.current);

@@ -54,7 +54,18 @@
         "fengge.breakMinutes": { "type": "number", "default": 5, "description": "休息时长（分钟）" },
         "fengge.enableIdleReminder": { "type": "boolean", "default": true, "description": "是否闲置提醒" },
         "fengge.idleMinutes": { "type": "number", "default": 30, "description": "闲置多少分钟后提醒" },
-        "fengge.enableStatusBar": { "type": "boolean", "default": true, "description": "是否显示状态栏入口" }
+        "fengge.enableStatusBar": { "type": "boolean", "default": true, "description": "是否显示状态栏入口" },
+        "fengge.personaMode": {
+          "type": "string",
+          "enum": ["neutral", "standard", "intense"],
+          "default": "standard",
+          "description": "人设强度模式（中性/标准/强化）"
+        },
+        "fengge.safeMode": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用安全降级：自动柔化过激措辞"
+        }
       }
     }
   },

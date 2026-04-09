@@ -1,3 +1,5 @@
+import { applySafety } from './styleConfig';
+
 const OPENINGS = [
   '来了？先别空谈理想，先把今天最硬的一块干掉。',
   '观察模式开启。说吧，今天最卡的是哪一段？',
@@ -82,23 +84,23 @@ const NICKNAMES = ['执行派', '稳进型选手', '收敛大师', '进度收割
 
 function pick<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)]; }
 
-export function getOpening(): string { return pick(OPENINGS); }
-export function getWorkLine(): string { return pick(WORK_LINES); }
-export function getEncourageLine(): string { return pick(ENCOURAGE_LINES); }
-export function getComfort(): string { return pick(COMFORT_LINES); }
-export function getSolemnComfort(): string { return pick(SOLEMN_LINES); }
-export function getFocusStart(minutes: number): string { return `${pick(FOCUS_START)}\n⏱ 专注时间：${minutes} 分钟`; }
-export function getFocusEnd(): string { return pick(FOCUS_END); }
-export function getBreakRemind(): string { return pick(BREAK_REMIND); }
-export function getBreakEnd(): string { return pick(BREAK_END); }
-export function getIdleRemind(): string { return pick(IDLE); }
-export function getMonologue(): string { return `🧠 现实独白\n\n${pick(MONOLOGUE)}`; }
-export function getFieldNote(): string { return pick(FIELD_NOTES); }
-export function getNickname(): string { return `今天你的绰号：${pick(NICKNAMES)}`; }
+export function getOpening(): string { return applySafety(pick(OPENINGS)); }
+export function getWorkLine(): string { return applySafety(pick(WORK_LINES)); }
+export function getEncourageLine(): string { return applySafety(pick(ENCOURAGE_LINES)); }
+export function getComfort(): string { return applySafety(pick(COMFORT_LINES)); }
+export function getSolemnComfort(): string { return applySafety(pick(SOLEMN_LINES)); }
+export function getFocusStart(minutes: number): string { return applySafety(`${pick(FOCUS_START)}\n⏱ 专注时间：${minutes} 分钟`); }
+export function getFocusEnd(): string { return applySafety(pick(FOCUS_END)); }
+export function getBreakRemind(): string { return applySafety(pick(BREAK_REMIND)); }
+export function getBreakEnd(): string { return applySafety(pick(BREAK_END)); }
+export function getIdleRemind(): string { return applySafety(pick(IDLE)); }
+export function getMonologue(): string { return applySafety(`🧠 现实独白\n\n${pick(MONOLOGUE)}`); }
+export function getFieldNote(): string { return applySafety(pick(FIELD_NOTES)); }
+export function getNickname(): string { return applySafety(`今天你的绰号：${pick(NICKNAMES)}`); }
 
 export function getFinale(done: number): string {
   const base = pick(FINALE);
-  return done > 0 ? `${base}\n\n📋 今日完成番茄轮次：${done}` : base;
+  return applySafety(done > 0 ? `${base}\n\n📋 今日完成番茄轮次：${done}` : base);
 }
 
 export function getJudgment(issues: string[]): string {
@@ -106,7 +108,7 @@ export function getJudgment(issues: string[]): string {
   const detail = issues.length > 0
     ? `\n【问题】\n${issues.map((s, i) => `${i + 1}. ${s}`).join('\n')}`
     : '\n【问题】目前未发现明显错误。';
-  return `${open}${detail}\n${pick(JUDGMENT_ENDINGS)}`;
+  return applySafety(`${open}${detail}\n${pick(JUDGMENT_ENDINGS)}`);
 }
 
 export function getTimeBasedGreeting(): string {
