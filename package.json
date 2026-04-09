@@ -1,0 +1,72 @@
+{
+  "name": "fengge-companion",
+  "displayName": "峰哥工作陪伴",
+  "description": "峰哥风格的社会观察型 VS Code 陪伴插件：番茄钟、代码巡查、即时聊天与工作节奏提醒",
+  "version": "0.1.0",
+  "publisher": "fengge-studio",
+  "license": "MIT",
+  "icon": "media/fengge-icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/westsmiles2405/Fengge-skill.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "fengge-companion",
+          "title": "峰哥",
+          "icon": "media/fengge-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "fengge-companion": [
+        {
+          "type": "webview",
+          "id": "fengge.chatPanel",
+          "name": "峰哥观察室",
+          "icon": "media/fengge-icon.svg"
+        }
+      ]
+    },
+    "commands": [
+      { "command": "fengge.openStage", "title": "峰哥：开启观察模式", "category": "Fengge" },
+      { "command": "fengge.startPomodoro", "title": "峰哥：开始番茄钟专注", "category": "Fengge" },
+      { "command": "fengge.stopPomodoro", "title": "峰哥：结束番茄钟", "category": "Fengge" },
+      { "command": "fengge.encourageMe", "title": "峰哥：给我打气", "category": "Fengge" },
+      { "command": "fengge.reviewWork", "title": "峰哥：巡查我的代码", "category": "Fengge" },
+      { "command": "fengge.finale", "title": "峰哥：今日收工", "category": "Fengge" },
+      { "command": "fengge.monologue", "title": "峰哥：现实独白", "category": "Fengge" },
+      { "command": "fengge.fieldNote", "title": "峰哥：现场笔记", "category": "Fengge" },
+      { "command": "fengge.nickname", "title": "峰哥：取个绰号", "category": "Fengge" }
+    ],
+    "configuration": {
+      "title": "峰哥工作陪伴",
+      "properties": {
+        "fengge.pomodoroMinutes": { "type": "number", "default": 25, "description": "番茄钟专注时长（分钟）" },
+        "fengge.breakMinutes": { "type": "number", "default": 5, "description": "休息时长（分钟）" },
+        "fengge.enableIdleReminder": { "type": "boolean", "default": true, "description": "是否闲置提醒" },
+        "fengge.idleMinutes": { "type": "number", "default": 30, "description": "闲置多少分钟后提醒" },
+        "fengge.enableStatusBar": { "type": "boolean", "default": true, "description": "是否显示状态栏入口" }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3"
+  }
+}
